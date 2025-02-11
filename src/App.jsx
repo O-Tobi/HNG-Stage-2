@@ -73,8 +73,8 @@ const App = () => {
             <div className="flex flex-col gap-[8px]">
               <p className="underline">Select Ticket Type:</p>
 
-              <div className="flex rounded-[16px] border-[1px] border-borderColor p-[16px] gap-[16px] bg-[#052228] ">
-                <div className="flex flex-wrap justify-between items-center gap-[16px]  p-[16px] w-[556px]">
+              <div className="flex rounded-[16px] border-[1px] border-borderColor p-[16px] gap-[16px] bg-[#052228] w-[556px]">
+                <div className="flex flex-wrap justify-between items-center gap-[24px]">
 
                   <div className="flex underline rounded-[12px] gap-[8px] p-[8px] border-[1px] border-borderColor bg-[#197686] w-[242px] h-[65px]">
                     <div>
