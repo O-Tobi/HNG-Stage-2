@@ -140,9 +140,9 @@ const App = () => {
             
             </div>
 
-            <div>
-              <button className="btn">Cancel</button>
-              <button className="btn">Next</button>
+            <div className="flex w-full rounded-[24px] border-[1px] border-borderColor px-[48px] gap-[32px] h-[48px] bg-ticketCenter">
+              <button className="btn w-[214px] h-[48px] border-[1px] border-[#24A0B5] rounded-[8px] py-[12px] px-[24px] bg-transparent text-[16px] underline text-[#24A0B5]">Cancel</button>
+              <button className="btn w-[214px] h-[48px] border-[1px] border-[#24A0B5] rounded-[8px] py-[12px] px-[24px] bg-[#24A0B5] text-[16px] underline text-white">Next</button>
             </div>
           </div>
         </div>
