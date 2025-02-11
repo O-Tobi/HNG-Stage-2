@@ -1,4 +1,5 @@
 import {
+  ArrowDown,
   ArrowLeft,
   HorizontalLine,
   Logo,
@@ -35,7 +36,7 @@ const App = () => {
 
       {/* ticket main here */}
       <main className="flex flex-col justify-center bg-mainBg border-[1px] border-borderColor rounded-[40px] p-[48px] gap-[32px] w-[700px] h-[902px]">
-        <div className="flex items-center justify-between py-2">
+        <div className="flex items-center justify-between pt-2">
           <h1 className="text-[32px] font-normal underline leading-[32px]">
             Ticket Selection
           </h1>
@@ -44,7 +45,7 @@ const App = () => {
           </p>
         </div>
 
-        <div className="mb-6">
+        <div className="mb-2">
           <img src={ProgressContainer} alt="" />
         </div>
 
@@ -75,40 +76,68 @@ const App = () => {
 
               <div className="flex rounded-[16px] border-[1px] border-borderColor p-[16px] gap-[16px] bg-[#052228] w-[556px]">
                 <div className="flex flex-wrap justify-between items-center gap-[24px]">
-
-                  <div className="flex underline rounded-[12px] gap-[8px] p-[8px] border-[1px] border-borderColor bg-[#197686] w-[242px] h-[65px]">
+                  <div className="flex justify-between underline rounded-[12px] gap-[8px] p-[8px] border-[1px] border-borderColor bg-[#197686] w-[242px] h-[65px]">
                     <div>
                       <p>REGULAR ACCESS</p>
                       <p>20 left!</p>
                     </div>
-                    <button className="btn bg-[#0E464F] border-[1px] text-[20px] text-right text-white leading-[22px] border-borderColor gap-[8px] py-[8px] pl-[30px] ">Free</button> 
+                    <button className="btn bg-[#0E464F] border-[1px] text-[20px] text-right text-white leading-[22px] border-borderColor gap-[8px] py-[8px] pl-[30px] ">
+                      Free
+                    </button>
                   </div>
 
-                  <div className="flex underline rounded-[12px] gap-[10px] p-[8px] border-[1px] border-borderColor bg-[#197686] w-[242px] h-[65px]">
+                  <div className="flex justify-between underline rounded-[12px] gap-[8px] p-[8px] border-[1px] border-borderColor  w-[242px] h-[65px]">
                     <div>
                       <p>VIP ACCESS</p>
                       <p>20 left!</p>
                     </div>
-                    <button className="btn bg-[#0E464F] border-[1px] text-[20px] text-right text-white leading-[22px] border-borderColor gap-[10px] py-[8px] pl-[30px] ">$50</button> 
+                    <button className="btn bg-[#0E464F] border-[1px] text-[20px] text-right text-white leading-[22px] border-borderColor gap-[10px] py-[8px] pl-[30px] ">
+                      $50
+                    </button>
                   </div>
 
-
-                  <div className="flex underline rounded-[12px] gap-[10px] p-[8px] border-[1px] border-borderColor bg-[#197686] w-[242px] h-[65px]">
+                  <div className="flex justify-between underline rounded-[12px] gap-[8px] p-[8px] border-[1px] border-borderColor  w-[242px] h-[65px]">
                     <div>
                       <p>VVIP ACCESS</p>
                       <p>20 left!</p>
                     </div>
-                    <button className="btn bg-[#0E464F] border-[1px] text-[20px] text-right text-white leading-[22px] border-borderColor gap-[8px] py-[8px] pl-[30px] ">$150</button> 
+                    <button className="btn bg-[#0E464F] border-[1px] text-[20px] text-right text-white leading-[22px] border-borderColor gap-[8px] py-[8px] pl-[30px] ">
+                      $150
+                    </button>
                   </div>
-
-
                 </div>
               </div>
             </div>
+            
 
-            <div>
-              <p>Number of Tickets</p>
+            <div className="py-6">
+              <p className="text-[16px] underline">Number of Tickets</p>
               {/* dropdown here */}
+              <details className="dropdown w-full">
+                <summary className="btn flex justify-between m-1 w-full bg-transparent border-[1px] border-borderColor hover:bg-transparent text-white">
+                  <p>1</p>
+                  <img src={ArrowDown} alt="" className="w-3 h-3"/>
+                  
+                </summary>
+                <ul className="menu bg-background dropdown-content rounded-box z-[1] w-full p-2 shadow">
+                  <li>
+                    <a>1</a>
+                  </li>
+                  <li>
+                    <a>2</a>
+                  </li>
+                  <li>
+                    <a>3</a>
+                  </li>
+                  <li>
+                    <a>4</a>
+                  </li>
+                  <li>
+                    <a>5</a>
+                  </li>
+                </ul>
+              </details>
+            
             </div>
 
             <div>
