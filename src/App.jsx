@@ -8,13 +8,13 @@ import {
 
 const App = () => {
   return (
-    <div className="flex flex-col justify-center items-center py-6">
+    <div className="flex flex-col justify-center items-center  md:px-0 py-3 md:py-6">
       {/* header starts here */}
-      <header className="flex items-center justify-between w-[1200px] h-[76px] border-[1px] bg-headerBg/40 border-borderColor rounded-[24px] py-[12px] px-[16px] mb-10">
+      <header className="flex items-center justify-between w-[320px] h-[68px] md:w-[1200px] md:h-[76px] border-[1px] bg-headerBg/40 border-borderColor rounded-[12px] md:rounded-[24px] py-[12px] px-[16px] mb-10">
         <img src={Logo} alt="logo" />
 
         <div>
-          <ul className="flex gap-[16px] ">
+          <ul className="hidden md:flex gap-[16px] ">
             <li>
               <nav>Events</nav>
             </li>
@@ -35,48 +35,51 @@ const App = () => {
       </header>
 
       {/* ticket main here */}
-      <main className="flex flex-col justify-center bg-mainBg border-[1px] border-borderColor rounded-[40px] p-[48px] gap-[32px] w-[700px] h-[902px]">
-        <div className="flex items-center justify-between pt-2">
+      <main className="flex flex-col justify-center bg-[#08252B] md:bg-mainBg border-[1px] border-[#0E464F] md:border-borderColor rounded-[32px] md:rounded-[40px] p-[24px] md:p-[48px] gap-[32px] w-[335px] h-[1030px] md:w-[700px] md:h-[902px]">
+        <div className="flex flex-col md:flex-row gap-[12px] w-[287px] h-[76px] md:w-[604px] md:h-[48px] md:items-center md:justify-between md:pt-2">
           <h1 className="text-[32px] font-normal underline leading-[32px]">
             Ticket Selection
           </h1>
           <p className="text-[16px] font-normal leading-[24px] underline">
             Step 1/3
           </p>
+          <div className="block md:hidden">
+          <img src={ProgressContainer} alt="" />
+        </div>
         </div>
 
-        <div className="mb-2">
+        <div className="mb-2 hidden md:block">
           <img src={ProgressContainer} alt="" />
         </div>
 
-        <div className="flex bg-ticketCenter border-[1px] border-borderColor rounded-[32px] p-[24px] gap-[32px] ">
+        <div className="flex bg-transparent md:bg-ticketCenter md:border-[1px] border-borderColor md:rounded-[32px] md:p-[24px] md:gap-[32px] ">
           <div className="flex flex-col justify-center ">
-            <div className="w-[556px] flex flex-col justify-center items-center rounded-[24px] p-[24px] gap-[8px] mb-4 border-solid border-[#07373F] border-t-0 border-r-2 border-b-2 border-l-2">
-              <h1 className="text-[52px] leading-[62px] font-normal underline">
-                Techember Fest "25
+            <div className="w-[287px] h-[273px] md:h-[200px] md:w-[556px] flex flex-col justify-center items-center rounded-[24px] py-[16px] px-[24px] md:p-[24px] gap-[8px] mb-4 border-solid border-[#07373F] border-t-0 border-r-2 border-b-2 border-l-2">
+              <h1 className="text-[25px] text-center  md:text-[52px] leading-[62px] font-normal underline">
+                Techember Fest &rsquo;25
               </h1>
-              <p className="text-[16px] leading[24px] font-normal underline">
-                Join us for an unforgettable experience at <br /> [Event Name]!
+              <p className="w-[239px] text-center  md:w-[240px] text-[14px] md:text-[16px] leading[24px] font-normal underline">
+                Join us for an unforgettable experience at [Event Name]!
                 Secure your spot now.
               </p>
 
-              <div className="flex gap-[16px] ">
+              <div className="flex flex-col md:flex-row md:gap-[16px] text-[14px] md:text-[16px]">
                 <p>📍[Event Location]</p>
-                <p>| |</p>
+                <p className="hidden md:block">| |</p>
                 <p>March 15, 2025 | 7:00 PM</p>
               </div>
             </div>
 
-            <div className="my-6">
+            <div className="h-[4px] w-[287px]  md:w-[556px] my-6">
               <img src={HorizontalLine} alt="" />
             </div>
 
             <div className="flex flex-col gap-[8px]">
-              <p className="underline">Select Ticket Type:</p>
+              <p className="text-[16px] underline">Select Ticket Type:</p>
 
-              <div className="flex rounded-[16px] border-[1px] border-borderColor p-[16px] gap-[16px] bg-[#052228] w-[556px]">
+              <div className="flex rounded-[24px] md:rounded-[16px] border-[1px] border-[#07373F] md:border-borderColor p-[16px] gap-[16px] bg-[#052228] w-[287px] h-[275px] md:h-[186px] md:w-[556px]">
                 <div className="flex flex-wrap justify-between items-center gap-[24px]">
-                  <div className="flex justify-between underline rounded-[12px] gap-[8px] p-[8px] border-[1px] border-borderColor bg-[#197686] w-[242px] h-[65px]">
+                  <div className="flex justify-between underline rounded-[12px] gap-[8px] p-[8px] border-[1px] border-[#07373F] md:border-borderColor bg-[#197686] w-[242px] h-[65px]">
                     <div>
                       <p>REGULAR ACCESS</p>
                       <p>20 left!</p>
@@ -86,7 +89,7 @@ const App = () => {
                     </button>
                   </div>
 
-                  <div className="flex justify-between underline rounded-[12px] gap-[8px] p-[8px] border-[1px] border-borderColor  w-[242px] h-[65px]">
+                  <div className="flex justify-between underline rounded-[12px] gap-[8px] p-[8px] border-[1px] border-[#07373F] md:border-borderColor  w-[242px] h-[65px]">
                     <div>
                       <p>VIP ACCESS</p>
                       <p>20 left!</p>
@@ -96,7 +99,7 @@ const App = () => {
                     </button>
                   </div>
 
-                  <div className="flex justify-between underline rounded-[12px] gap-[8px] p-[8px] border-[1px] border-borderColor  w-[242px] h-[65px]">
+                  <div className="flex justify-between underline rounded-[12px] gap-[8px] p-[8px] border-[1px] border-[#07373F] md:border-borderColor w-[242px] h-[65px]">
                     <div>
                       <p>VVIP ACCESS</p>
                       <p>20 left!</p>
@@ -113,8 +116,8 @@ const App = () => {
             <div className="py-6">
               <p className="text-[16px] underline">Number of Tickets</p>
               {/* dropdown here */}
-              <details className="dropdown w-full">
-                <summary className="btn flex justify-between m-1 w-full bg-transparent border-[1px] border-borderColor hover:bg-transparent text-white">
+              <details className="dropdown w-[287px] md:w-full">
+                <summary className="btn flex justify-between m-1 w-[287px] md:w-full bg-transparent border-[1px] border-borderColor hover:bg-transparent text-white">
                   <p>1</p>
                   <img src={ArrowDown} alt="" className="w-3 h-3"/>
                   
@@ -140,9 +143,9 @@ const App = () => {
             
             </div>
 
-            <div className="flex w-full rounded-[24px] border-[1px] border-borderColor px-[48px] gap-[32px] h-[48px] bg-ticketCenter">
-              <button className="btn w-[214px] h-[48px] border-[1px] border-[#24A0B5] rounded-[8px] py-[12px] px-[24px] bg-transparent text-[16px] underline text-[#24A0B5]">Cancel</button>
-              <button className="btn w-[214px] h-[48px] border-[1px] border-[#24A0B5] rounded-[8px] py-[12px] px-[24px] bg-[#24A0B5] text-[16px] underline text-white">Next</button>
+            <div className="flex justify-center items-center flex-col md:flex-row w-[287px] h-[112px] md:w-full md:rounded-[24px] md:border-[1px] border-borderColor px-[48px] gap-[20px] md:gap-[32px] md:h-[48px] bg-ticketCenter">
+              <button className="order-2 btn w-[287px] md:w-[214px] h-[48px] border-[1px] border-[#24A0B5] rounded-[8px] py-[12px] px-[24px] bg-transparent text-[16px] underline text-[#24A0B5]">Cancel</button>
+              <button className="order-1 btn w-[287px] md:w-[214px] h-[48px] border-[1px] border-[#24A0B5] rounded-[8px] py-[12px] px-[24px] bg-[#24A0B5] text-[16px] underline text-white">Next</button>
             </div>
           </div>
         </div>
