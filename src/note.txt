@@ -1,0 +1,32 @@
+       const  TicketSchema = Yup.object().shape({
+    name: Yup.string()
+    .min(2, "Too Short!")
+    .max(50, "Too long!")
+    .required("Name is required"),
+
+    email:Yup.string()
+    .email("Invalid email")
+    .required("Email is required"),
+
+});
+       
+        {/* form here */}
+        sole.log("Form Data:", values;)
+            setSubmitting(false);
+        }}
+        >
+            {({ isSubmitting }) => (
+                <Form>
+                    <div>
+            <label>Name</label>
+            <Field type="text" name="name" />
+            <ErrorMessage name="name" component="div" className="error" />
+          </div> 
+                </Form>
+            )}
+
+        </Formik>
+
+
+
+        ###gradient not working
