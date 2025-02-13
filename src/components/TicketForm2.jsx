@@ -13,19 +13,80 @@ const TicketSchema = Yup.object().shape({
 
 const TicketForm2 = () => {
   const navigateTo = useNavigate();
-  const [profileImage, setProfileImage] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [previewImage, setPreviewImage] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const myPreset = import.meta.env.VITE_UPLOAD_PRESET;
 
   useEffect(() => {
     return () => {
-      if (profileImage) {
-        URL.revokeObjectURL(profileImage);
+      if (previewImage) {
+        URL.revokeObjectURL(previewImage);
       }
     };
-  }, [profileImage]);
+  }, [previewImage]);
 
   const handleBackButton = () => {
     navigateTo("/");
+  };
+
+  const uploadImageToCloudinary = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", myPreset);
+    formData.append("cloud_name", "dwlnm5sgl");
+
+    try {
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/dwlnm5sgl/image/upload`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const data = await response.json();
+      return data.secure_url; // Return the uploaded image URL
+    } catch (error) {
+      console.error("Error uploading image to Cloudinary:", error);
+      throw error;
+    }
+  };
+
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    setIsUploading(true);
+    try {
+      // Upload image to Cloudinary
+      const imageUrl = await uploadImageToCloudinary(values.profilePhoto);
+
+      // Create new form data object with the Cloudinary image URL
+      const newFormData = {
+        ...values,
+        profilePhoto: imageUrl,
+      };
+
+      // Convert the new form data to a string (e.g., "def")
+      const newDataString = JSON.stringify(newFormData);
+
+      // Retrieve existing data from localStorage (e.g., "abc")
+      const existingDataString = localStorage.getItem("ticketFormData") || "";
+
+      // Merge the existing data and new data (e.g., "abcdef")
+      const mergedDataString = existingDataString + newDataString;
+
+      // Save the merged data back to localStorage
+      localStorage.setItem("ticketFormData", mergedDataString);
+
+      // Log the merged data for debugging
+      console.log("Merged ticket form data:", mergedDataString);
+
+      // Update preview image and reset form
+      setPreviewImage(imageUrl);
+      resetForm();
+    } catch (error) {
+      console.error("Error during form submission:", error);
+    } finally {
+      setSubmitting(false);
+      setIsUploading(false);
+    }
   };
 
   return (
@@ -37,12 +98,7 @@ const TicketForm2 = () => {
         profilePhoto: null,
       }}
       validationSchema={TicketSchema}
-      onSubmit={(values, { setSubmitting, resetForm }) => {
-        alert(JSON.stringify(values, null, 2)); // save the data to a usestate here/local storage
-        setSubmitting(false);
-        resetForm();
-        setProfileImage(null);
-      }}
+      onSubmit={handleSubmit}
     >
       {({ isSubmitting, setFieldValue }) => (
         <Form className="flex flex-col gap-[14px]">
@@ -54,16 +110,22 @@ const TicketForm2 = () => {
                 htmlFor="profilePhoto"
                 className="flex flex-col justify-center items-center w-[240px] h-[240px] p-[24px] gap-[16px] rounded-[32px] bg-[#0E464F] cursor-pointer"
               >
-                {profileImage ? (
+                {previewImage ? (
                   <img
-                    src={profileImage}
+                    src={previewImage}
                     alt="Uploaded Preview"
                     className="w-[240px] h-[240px] object-cover rounded-[32px]"
                   />
                 ) : (
                   <>
-                    <img src={CloudDownload} alt="Upload" className="w-[32px] h-[32px]" />
-                    <p className="text-center text-[16px]">Drag & drop or Click to Upload</p>
+                    <img
+                      src={CloudDownload}
+                      alt="Upload"
+                      className="w-[32px] h-[32px]"
+                    />
+                    <p className="text-center text-[16px]">
+                      Drag & drop or Click to Upload
+                    </p>
                   </>
                 )}
                 <input
@@ -77,13 +139,17 @@ const TicketForm2 = () => {
                     if (file) {
                       setFieldValue("profilePhoto", file);
                       const objectUrl = URL.createObjectURL(file);
-                      setProfileImage(objectUrl);
+                      setPreviewImage(objectUrl);
                     }
                   }}
                 />
               </label>
             </div>
-            <ErrorMessage name="profilePhoto" component="div" className="error text-red-500" />
+            <ErrorMessage
+              name="profilePhoto"
+              component="div"
+              className="error text-red-500"
+            />
           </div>
 
           <div className="h-[4px] w-[287px] md:w-[556px] my-6">
@@ -99,7 +165,11 @@ const TicketForm2 = () => {
               type="text"
               className="bg-transparent border-[1px] border-[#07373F] h-[48px] rounded-[12px] p-[12px] gap-[8px]"
             />
-            <ErrorMessage name="name" component="div" className="error text-red-500" />
+            <ErrorMessage
+              name="name"
+              component="div"
+              className="error text-red-500"
+            />
           </div>
 
           {/* Email Input */}
@@ -111,7 +181,11 @@ const TicketForm2 = () => {
               type="email"
               className="bg-transparent border-[1px] border-[#07373F] h-[48px] rounded-[12px] p-[12px] gap-[8px]"
             />
-            <ErrorMessage name="email" component="div" className="error text-red-500" />
+            <ErrorMessage
+              name="email"
+              component="div"
+              className="error text-red-500"
+            />
           </div>
 
           {/* About Project */}
@@ -123,7 +197,11 @@ const TicketForm2 = () => {
               name="aboutProject"
               className="bg-transparent border-[1px] border-[#07373F] h-[127px] rounded-[12px] p-[12px] gap-[8px]"
             />
-            <ErrorMessage name="aboutProject" component="div" className="error text-red-500" />
+            <ErrorMessage
+              name="aboutProject"
+              component="div"
+              className="error text-red-500"
+            />
           </div>
 
           {/* Buttons */}
@@ -137,10 +215,10 @@ const TicketForm2 = () => {
             </button>
             <button
               type="submit"
-              disabled={isSubmitting}
+              disabled={isSubmitting || isUploading}
               className="order-1 btn w-[287px] md:w-[270px] h-[48px] border-[1px] border-[#24A0B5] rounded-[8px] py-[12px] px-[24px] bg-[#24A0B5] text-[16px] text-white"
             >
-              Get My Free Ticket
+              {isUploading ? "Uploading..." : "Get My Free Ticket"}
             </button>
           </div>
         </Form>
