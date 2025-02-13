@@ -15,6 +15,12 @@ const TicketForm2 = () => {
   const navigateTo = useNavigate();
   const [previewImage, setPreviewImage] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    aboutProject: "",
+    profilePhoto: null,
+  });
   const myPreset = import.meta.env.VITE_UPLOAD_PRESET;
 
   useEffect(() => {
@@ -57,26 +63,24 @@ const TicketForm2 = () => {
       // Upload image to Cloudinary
       const imageUrl = await uploadImageToCloudinary(values.profilePhoto);
 
-      // Create new form data object with the Cloudinary image URL
-      const newFormData = {
-        ...values,
-        profilePhoto: imageUrl,
+      // Retrieve existing form data from localStorage
+      const existingData =
+        JSON.parse(localStorage.getItem("ticketFormData")) || {};
+
+      // Merge new data with existing data, replacing the profilePhoto field
+      const updatedData = {
+        ...existingData,
+        name: values.name,
+        email: values.email,
+        aboutProject: values.aboutProject,
+        profilePhoto: imageUrl, // Store Cloudinary URL instead of file object
       };
 
-      // Convert the new form data to a string (e.g., "def")
-      const newDataString = JSON.stringify(newFormData);
+      // Save updated data to localStorage
+      localStorage.setItem("ticketFormData", JSON.stringify(updatedData));
 
-      // Retrieve existing data from localStorage (e.g., "abc")
-      const existingDataString = localStorage.getItem("ticketFormData") || "";
-
-      // Merge the existing data and new data (e.g., "abcdef")
-      const mergedDataString = existingDataString + newDataString;
-
-      // Save the merged data back to localStorage
-      localStorage.setItem("ticketFormData", mergedDataString);
-
-      // Log the merged data for debugging
-      console.log("Merged ticket form data:", mergedDataString);
+      // Debugging
+      console.log("Updated localStorage data:", updatedData);
 
       // Update preview image and reset form
       setPreviewImage(imageUrl);
@@ -89,14 +93,19 @@ const TicketForm2 = () => {
     }
   };
 
+  // Load stored data on mount
+useEffect(() => {
+  const storedData = JSON.parse(localStorage.getItem("ticketFormData"));
+  if (storedData) {
+    setFormData(storedData);
+    setPreviewImage(storedData.profilePhoto || null);
+  }
+}, []);
+
   return (
     <Formik
-      initialValues={{
-        name: "",
-        email: "",
-        aboutProject: "",
-        profilePhoto: null,
-      }}
+      enableReinitialize
+      initialValues={formData}
       validationSchema={TicketSchema}
       onSubmit={handleSubmit}
     >
