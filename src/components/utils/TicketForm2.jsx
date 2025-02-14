@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
-import { CloudDownload, HorizontalLine } from "./utils/assets";
+import { CloudDownload, HorizontalLine } from "./assets";
 
 const TicketSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -34,6 +34,11 @@ const TicketForm2 = () => {
   const handleBackButton = () => {
     navigateTo("/");
   };
+
+  const handleNextPage = () => {
+    navigateTo("/step-3");
+  };
+
 
   const uploadImageToCloudinary = async (file) => {
     const formData = new FormData();
@@ -85,6 +90,7 @@ const TicketForm2 = () => {
       // Update preview image and reset form
       setPreviewImage(imageUrl);
       resetForm();
+      handleNextPage();
     } catch (error) {
       console.error("Error during form submission:", error);
     } finally {
@@ -112,7 +118,7 @@ useEffect(() => {
       {({ isSubmitting, setFieldValue }) => (
         <Form className="flex flex-col gap-[14px]">
           {/* Image Upload */}
-          <div className="flex flex-col w-[556px] h-[344px] border-[1px] border-[#07373F] bg-[#052228] rounded-[24px] gap-[32px] p-[24px]">
+          <div className="flex flex-col lg:w-[556px] lg:h-[344px] border-[1px] border-[#07373F] bg-[#052228] rounded-[24px] gap-[32px] p-[24px]">
             <p>Upload Profile Photo</p>
             <div className="flex items-center justify-center w-full gap-[10px] bg-[#000000]/20">
               <label
@@ -188,6 +194,7 @@ useEffect(() => {
               id="email"
               name="email"
               type="email"
+              placeholder="hello@avioflagos.io"
               className="bg-transparent border-[1px] border-[#07373F] h-[48px] rounded-[12px] p-[12px] gap-[8px]"
             />
             <ErrorMessage

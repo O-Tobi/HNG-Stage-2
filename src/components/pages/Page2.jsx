@@ -1,5 +1,5 @@
 
-import TicketForm2 from "../TicketForm2";
+import TicketForm2 from "../utils/TicketForm2";
 import { ProgressContainer2 } from "../utils/assets";
 
 const Page2 = () => {
