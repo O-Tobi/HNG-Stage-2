@@ -4,13 +4,6 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { CloudDownload, HorizontalLine } from "./assets";
 
-const TicketSchema = Yup.object().shape({
-  name: Yup.string().required("Name is required"),
-  email: Yup.string().email("Invalid email").required("Email is required"),
-  aboutProject: Yup.string().required("Project details are required"),
-  profilePhoto: Yup.mixed().required("Profile photo is required"),
-});
-
 const TicketForm2 = () => {
   const navigateTo = useNavigate();
   const [previewImage, setPreviewImage] = useState(null);
@@ -22,6 +15,15 @@ const TicketForm2 = () => {
     profilePhoto: null,
   });
   const myPreset = import.meta.env.VITE_UPLOAD_PRESET;
+
+  const TicketSchema = Yup.object().shape({
+    name: Yup.string().required("Name is required"),
+    email: Yup.string().email("Invalid email").required("Email is required"),
+    aboutProject: Yup.string()
+      .required("Project details are required")
+      .max(20, "Must be 20 characters or less"), // Limit to 20 characters
+    profilePhoto: Yup.mixed().required("Profile photo is required"),
+  });
 
   useEffect(() => {
     return () => {
@@ -38,7 +40,6 @@ const TicketForm2 = () => {
   const handleNextPage = () => {
     navigateTo("/step-3");
   };
-
 
   const uploadImageToCloudinary = async (file) => {
     const formData = new FormData();
@@ -84,9 +85,6 @@ const TicketForm2 = () => {
       // Save updated data to localStorage
       localStorage.setItem("ticketFormData", JSON.stringify(updatedData));
 
-      // Debugging
-      console.log("Updated localStorage data:", updatedData);
-
       // Update preview image and reset form
       setPreviewImage(imageUrl);
       resetForm();
@@ -100,13 +98,13 @@ const TicketForm2 = () => {
   };
 
   // Load stored data on mount
-useEffect(() => {
-  const storedData = JSON.parse(localStorage.getItem("ticketFormData"));
-  if (storedData) {
-    setFormData(storedData);
-    setPreviewImage(storedData.profilePhoto || null);
-  }
-}, []);
+  useEffect(() => {
+    const storedData = JSON.parse(localStorage.getItem("ticketFormData"));
+    if (storedData) {
+      setFormData(storedData);
+      setPreviewImage(storedData.profilePhoto || null);
+    }
+  }, []);
 
   return (
     <Formik
@@ -119,11 +117,20 @@ useEffect(() => {
         <Form className="flex flex-col gap-[14px]">
           {/* Image Upload */}
           <div className="flex flex-col lg:w-[556px] lg:h-[344px] border-[1px] border-[#07373F] bg-[#052228] rounded-[24px] gap-[32px] p-[24px]">
-            <p>Upload Profile Photo</p>
-            <div className="flex items-center justify-center w-full gap-[10px] bg-[#000000]/20">
+            <label htmlFor="profilePhoto">Upload Profile Photo</label>
+            <div
+              className="flex items-center justify-center w-full gap-[10px] bg-[#000000]/20"
+              role="group"
+              aria-labelledby="profilePhoto"
+            >
               <label
                 htmlFor="profilePhoto"
-                className="flex flex-col justify-center items-center w-[240px] h-[240px] p-[24px] gap-[16px] rounded-[32px] bg-[#0E464F] cursor-pointer"
+                className="flex flex-col justify-center items-center w-[240px] h-[240px] p-[24px] gap-[16px] rounded-[32px] bg-[#0E464F] cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#24A0B5]"
+                tabIndex={0}
+                onKeyDown={(e) =>
+                  e.key === "Enter" &&
+                  document.getElementById("profilePhoto").click()
+                }
               >
                 {previewImage ? (
                   <img
@@ -163,11 +170,12 @@ useEffect(() => {
             <ErrorMessage
               name="profilePhoto"
               component="div"
-              className="error text-red-500"
+              className="text-red-500"
+              aria-live="polite"
             />
           </div>
 
-          <div className="h-[4px] w-[287px] md:w-[556px] my-6">
+          <div className="h-[4px] w-[287px] lg:w-[556px] my-6">
             <img src={HorizontalLine} alt="Separator" />
           </div>
 
@@ -178,12 +186,14 @@ useEffect(() => {
               id="name"
               name="name"
               type="text"
-              className="bg-transparent border-[1px] border-[#07373F] h-[48px] rounded-[12px] p-[12px] gap-[8px]"
+              className="bg-transparent border-[1px] border-[#07373F] h-[48px] rounded-[12px] p-[12px] gap-[8px] focus:outline-none focus:ring-2 focus:ring-[#24A0B5]"
+              required
             />
             <ErrorMessage
               name="name"
               component="div"
-              className="error text-red-500"
+              className="text-red-500"
+              aria-live="polite"
             />
           </div>
 
@@ -195,12 +205,14 @@ useEffect(() => {
               name="email"
               type="email"
               placeholder="hello@avioflagos.io"
-              className="bg-transparent border-[1px] border-[#07373F] h-[48px] rounded-[12px] p-[12px] gap-[8px]"
+              className="bg-transparent border-[1px] border-[#07373F] h-[48px] rounded-[12px] p-[12px] gap-[8px] focus:outline-none focus:ring-2 focus:ring-[#24A0B5]"
+              required
             />
             <ErrorMessage
               name="email"
               component="div"
-              className="error text-red-500"
+              className="text-red-500"
+              aria-live="polite"
             />
           </div>
 
@@ -211,28 +223,30 @@ useEffect(() => {
               as="textarea"
               id="aboutProject"
               name="aboutProject"
-              className="bg-transparent border-[1px] border-[#07373F] h-[127px] rounded-[12px] p-[12px] gap-[8px]"
+              maxLength={30}
+              className="bg-transparent border-[1px] border-[#07373F] h-[127px] rounded-[12px] p-[12px] gap-[8px] focus:outline-none focus:ring-2 focus:ring-[#24A0B5]"
             />
             <ErrorMessage
               name="aboutProject"
               component="div"
-              className="error text-red-500"
+              className="text-red-500"
+              aria-live="polite"
             />
           </div>
 
           {/* Buttons */}
-          <div className="flex justify-center items-center flex-col md:flex-row h-[112px] w-full gap-[20px] md:gap-[32px] md:h-[48px]">
+          <div className="flex justify-center items-center flex-col lg:flex-row h-[112px] w-full gap-[20px] lg:gap-[32px] lg:h-[48px]">
             <button
               type="button"
               onClick={handleBackButton}
-              className="order-2 btn w-[287px] md:w-[270px] h-[48px] border-[1px] border-[#24A0B5] rounded-[8px] py-[12px] px-[24px] bg-transparent text-[16px] text-[#24A0B5]"
+              className="order-2 btn w-[287px] lg:w-[270px] h-[48px] border-[1px] border-[#24A0B5] rounded-[8px] py-[12px] px-[24px] bg-transparent text-[16px] text-[#24A0B5] focus:outline-none focus:ring-2 focus:ring-[#24A0B5]"
             >
               Back
             </button>
             <button
               type="submit"
               disabled={isSubmitting || isUploading}
-              className="order-1 btn w-[287px] md:w-[270px] h-[48px] border-[1px] border-[#24A0B5] rounded-[8px] py-[12px] px-[24px] bg-[#24A0B5] text-[16px] text-white"
+              className="order-1 btn w-[287px] lg:w-[270px] h-[48px] border-[1px] border-[#24A0B5] rounded-[8px] py-[12px] px-[24px] bg-[#24A0B5] text-[16px] text-white focus:outline-none focus:ring-2 focus:ring-white"
             >
               {isUploading ? "Uploading..." : "Get My Free Ticket"}
             </button>
