@@ -1,109 +1,20 @@
-import {
-  ArrowLeft,
-  HorizontalLine,
-  Logo,
-  ProgressContainer,
-} from "./components/utils/assets";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Page1 from "./components/pages/Page1";
+import Layout from "./components/Layouts/Layout";
+import Page2 from "./components/pages/Page2";
+import Page3 from "./components/pages/Page3";
 
 const App = () => {
   return (
-    <div>
-      {/* header starts here */}
-      <header>
-        <img src={Logo} alt="logo" />
-
-        <div>
-          <ul>
-            <li>
-              <nav>Events</nav>
-            </li>
-
-            <li>
-              <nav>My Tickets</nav>
-            </li>
-
-            <li>
-              <nav>About Project</nav>
-            </li>
-          </ul>
-        </div>
-
-        <button className="btn">
-          MY TICKETS <img src={ArrowLeft} />
-        </button>
-      </header>
-
-      <main>
-        <div>
-          <h1>Ticket Selection</h1>
-          <p>Step 1/3</p>
-        </div>
-
-        <div>
-          <img src={ProgressContainer} alt="" />
-        </div>
-
-        <div>
-          <div>
-            <h1>Techember Fest "25</h1>
-            <p>
-              Join us for an unforgettable experience at [Event Name]! Secure
-              your spot now.
-            </p>
-
-            <div>
-              <p>[Event Location]</p>
-              <p>||</p>
-              <p>March 15, 2025 | 7:00 PM</p>
-            </div>
-
-            <div>
-              <img src={HorizontalLine} alt="" />
-            </div>
-
-            <div>
-              <p>Select Ticket Type:</p>
-
-              <div className="rounded-container">
-                <div>
-                  <div>
-                    <p>REGULAR ACCESS</p>
-                    <p>20 left!</p>
-                  </div>
-                  <button className="btn">Free</button>
-                </div>
-
-                <div>
-                  <div>
-                    <p>VIP ACCESS</p>
-                    <p>20 left!</p>
-                  </div>
-                  <button className="btn">$50</button>
-                </div>
-
-                <div>
-                  <div>
-                    <p>VVIP ACCESS</p>
-                    <p>20 left!</p>
-                  </div>
-                  <button className="btn">$150</button>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <p>Number of Tickets</p>
-              {/* dropdown here */}
-            </div>
-
-            <div>
-              <button className="btn">Cancel</button>
-              <button className="btn">Next</button>
-            </div>
-          </div>
-        </div>
-      </main>
-    </div>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path="/" element={<Page1 />} />
+            <Route path="step-2" element={<Page2 />}/>
+            <Route path="step-3" element={<Page3 />}/>
+          </Route>
+        </Routes>
+      </BrowserRouter>
   );
 };
 
